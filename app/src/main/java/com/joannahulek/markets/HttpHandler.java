@@ -6,18 +6,18 @@ package com.joannahulek.markets;
  * FR Market: https://api.ig.com/deal/samples/markets/ANDROID_PHONE/fr_FR/frm
  * */
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-
-import static java.lang.String.format;
+import java.util.stream.Collectors;
 
 public class HttpHandler {
 
@@ -35,26 +35,28 @@ public class HttpHandler {
     }
 
     public void getMarket(String country) {
-        try (InputStream is = new URL(getSpecByCountry(country)).openStream();
-             JsonReader reader = Json.createReader(is)) {
-            JsonObject object = reader.readObject();
-            JsonArray results = object.getJsonArray("markets");
-            for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+        try (InputStream inputStream = new URL(getSpecByCountry(country)).openStream()) {
+            String jsonStr = new BufferedReader(new InputStreamReader(inputStream))
+                    .lines().collect(Collectors.joining("\n"));
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            JSONArray results = jsonObj.getJSONArray("markets");
+
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject result = results.getJSONObject(i);
                 String instrumentName = result.getString("instrumentName");
                 String displayOffer = result.getString("displayOffer");
-
             }
 
             //TODO:return objects list
 
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             System.out.println("Upss, something is wrong");
-
         }
+
     }
 
     private String getSpecByCountry(String country) {
-        return format(SPEC, COUNTRY_TO_LOCALE_MAPPER.get(country), COUNTRY_TO_COUNTRY_CODE_MAPPER.get(country));
+        return String.format(SPEC, COUNTRY_TO_LOCALE_MAPPER.get(country), COUNTRY_TO_COUNTRY_CODE_MAPPER.get(country));
     }
 }
 

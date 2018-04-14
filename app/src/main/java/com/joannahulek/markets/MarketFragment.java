@@ -3,6 +3,7 @@ package com.joannahulek.markets;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,11 @@ public class MarketFragment extends Fragment {
     String currentMarket;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_market, container, false);
+        assert getArguments() != null;
         currentMarket = (String) getArguments()
                 .getSerializable("market");
 

@@ -9,7 +9,7 @@ import static com.joannahulek.markets.MarketActivity.MARKETS;
 
 public class MarketsFragmentAdapter extends FragmentPagerAdapter {
 
-    public MarketsFragmentAdapter(FragmentManager fm) {
+    MarketsFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 

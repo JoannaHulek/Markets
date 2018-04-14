@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Markets</string>
+    <string name="instrument_name">Instrument Name:</string>
+    <string name="offer">Offer:</string>
 </resources>

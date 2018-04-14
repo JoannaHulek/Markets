@@ -31,4 +31,8 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> {
 
         return convertView;
     }
+
+    public CharSequence getPageTitle(int position) {
+        return "ojej";
+    }
 }

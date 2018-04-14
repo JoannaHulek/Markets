@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.List;
-
 import static com.joannahulek.markets.MarketActivity.MARKETS;
 
 public class MarketsFragmentAdapter extends FragmentPagerAdapter {
@@ -20,12 +18,17 @@ public class MarketsFragmentAdapter extends FragmentPagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putSerializable("market", MARKETS.get(position));
         MarketFragment marketFragment = new MarketFragment();
-            marketFragment.setArguments(bundle);
+        marketFragment.setArguments(bundle);
         return marketFragment;
     }
 
     @Override
     public int getCount() {
         return MARKETS.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return MARKETS.get(position);
     }
 }

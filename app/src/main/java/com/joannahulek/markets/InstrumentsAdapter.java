@@ -29,14 +29,6 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> {
         instrumentNameTV.setText(instrument.getInstrumentName());
         displayOfferTV.setText(instrument.getDisplayOffer());
 
-
-        // Lookup view for data population
-        // TextView tvName =  convertView.findViewById(R.id.tvName);
-        // TextView tvHome =  convertView.findViewById(R.id.tvHome);
-        // Populate the data into the template view using the data object
-        // tvName.setText(user.name);
-        // tvHome.setText(user.hometown);
-        // // Return the completed view to render on screen
         return convertView;
     }
 }

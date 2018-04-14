@@ -15,9 +15,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 public class HttpHandler {
 
@@ -34,25 +37,26 @@ public class HttpHandler {
         COUNTRY_TO_COUNTRY_CODE_MAPPER.put("France", "frm");
     }
 
-    public void getMarket(String country) {
-        try (InputStream inputStream = new URL(getSpecByCountry(country)).openStream()) {
-            String jsonStr = new BufferedReader(new InputStreamReader(inputStream))
-                    .lines().collect(Collectors.joining("\n"));
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            JSONArray results = jsonObj.getJSONArray("markets");
+    public List<Instrument> getMarket(String country) {
+        List<Instrument> instruments = new ArrayList<>();
 
+        try (InputStream inputStream = new URL(getSpecByCountry(country)).openStream()) {
+            String jsonStream = new BufferedReader(new InputStreamReader(inputStream))
+                    .lines().collect(joining("\n"));
+            JSONObject jsonObj = new JSONObject(jsonStream);
+            JSONArray results = jsonObj.getJSONArray("markets");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject result = results.getJSONObject(i);
                 String instrumentName = result.getString("instrumentName");
                 String displayOffer = result.getString("displayOffer");
+                instruments.add(new Instrument(instrumentName, displayOffer));
             }
 
-            //TODO:return objects list
 
         } catch (IOException | JSONException e) {
-            System.out.println("Upss, something is wrong");
+            System.out.println("Ups, something went wrong");
         }
-
+        return instruments;
     }
 
     private String getSpecByCountry(String country) {

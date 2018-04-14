@@ -26,7 +26,6 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> {
         TextView instrumentNameTV = convertView.findViewById(R.id.instrumentNameTextView);
         TextView displayOfferTV = convertView.findViewById(R.id.displayOfferTextView);
 
-        assert instrument != null;
         instrumentNameTV.setText(instrument.getInstrumentName());
         displayOfferTV.setText(instrument.getDisplayOffer());
 

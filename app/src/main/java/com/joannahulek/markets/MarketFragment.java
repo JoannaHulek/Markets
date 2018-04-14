@@ -14,30 +14,35 @@ import android.widget.ListView;
 import java.util.List;
 
 public class MarketFragment extends Fragment {
-    ViewGroup rootView;
-    ListView listView;
-    String currentMarket;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_market, container, false);
-        assert getArguments() != null;
-        currentMarket = (String) getArguments()
-                .getSerializable("market");
+        String currentMarket = (String) getArguments().getSerializable("market");
 
-        listView = rootView.findViewById(R.id.itemsListView);
-        new LoadJsonTask().execute();
+        ListView listView = rootView.findViewById(R.id.itemsListView);
+        new LoadJsonTask(rootView, listView, currentMarket).execute();
         return rootView;
     }
 
-    private class LoadJsonTask extends AsyncTask<String, Void, List<Instrument>> {
-        ProgressDialog dialog;
+    private static class LoadJsonTask extends AsyncTask<String, Void, List<Instrument>> {
+        private ProgressDialog dialog;
+        private ViewGroup rootView;
+        private ListView listView;
+        private String currentMarket;
+
+        private LoadJsonTask(ViewGroup rootView,
+                            ListView listView,
+                            String currentMarket) {
+            this.rootView = rootView;
+            this.listView = listView;
+            this.currentMarket = currentMarket;
+        }
 
         protected void onPreExecute() {
-            dialog = ProgressDialog.show(MarketFragment.this.getContext(), "Loading data", "Please wait");
-
+            dialog = ProgressDialog.show(rootView.getContext(), "Loading data", "Please wait");
         }
 
         @Override
@@ -46,8 +51,7 @@ public class MarketFragment extends Fragment {
         }
 
         protected void onPostExecute(List<Instrument> instruments) {
-            ArrayAdapter<Instrument> adapter =
-                    new InstrumentsAdapter(rootView.getContext(), instruments);
+            ArrayAdapter<Instrument> adapter = new InstrumentsAdapter(rootView.getContext(), instruments);
             listView.setAdapter(adapter);
             dialog.dismiss();
         }

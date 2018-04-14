@@ -18,18 +18,14 @@ public class MarketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = findViewById(R.id.viewpager);
 
         MarketsFragmentAdapter adapter = new MarketsFragmentAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 }

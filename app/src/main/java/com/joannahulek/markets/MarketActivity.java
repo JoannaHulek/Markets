@@ -22,6 +22,5 @@ public class MarketActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
-
     }
 }

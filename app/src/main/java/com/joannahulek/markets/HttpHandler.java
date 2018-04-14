@@ -14,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -50,7 +52,8 @@ public class HttpHandler {
                 JSONObject result = results.getJSONObject(i);
                 String instrumentName = result.getString("instrumentName");
                 String displayOffer = result.getString("displayOffer");
-                instruments.add(new Instrument(instrumentName, displayOffer));
+                instruments.add(new Instrument(instrumentName,
+                        new BigDecimal(displayOffer).setScale(2, RoundingMode.HALF_EVEN).toString()));
             }
 
         } catch (IOException | JSONException e) {

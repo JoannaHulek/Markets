@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,15 +53,16 @@ public class HttpHandler {
                 instruments.add(new Instrument(instrumentName, displayOffer));
             }
 
-
         } catch (IOException | JSONException e) {
             System.out.println("Ups, something went wrong");
         }
+
+        instruments.sort(Comparator.comparing(Instrument::getInstrumentName));
         return instruments;
     }
 
     private String getSpecByCountry(String country) {
-        return String.format(SPEC, COUNTRY_TO_LOCALE_MAPPER.get(country), COUNTRY_TO_COUNTRY_CODE_MAPPER.get(country));
+        return String.format(SPEC, COUNTRY_TO_LOCALE_MAPPER.get(country),
+                COUNTRY_TO_COUNTRY_CODE_MAPPER.get(country));
     }
 }
-

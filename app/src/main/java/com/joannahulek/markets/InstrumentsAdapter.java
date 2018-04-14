@@ -32,4 +32,3 @@ public class InstrumentsAdapter extends ArrayAdapter<Instrument> {
         return convertView;
     }
 }
-

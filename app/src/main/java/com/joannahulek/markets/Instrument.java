@@ -5,7 +5,6 @@ class Instrument {
     private final String instrumentName;
     private final String displayOffer;
 
-
     Instrument(String instrumentName, String displayOffer) {
         this.instrumentName = instrumentName;
         this.displayOffer = displayOffer;
